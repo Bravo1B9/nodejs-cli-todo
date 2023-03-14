@@ -40,16 +40,39 @@ const printTodos = () => {
   });
 };
 
+const removeTodo = () => {
+  rl.question('Enter the number of the todo you wish to remove: ', (index) => {
+    const todos = getTodos();
+    if (index >= 1 && index <= todos.length) {
+      const removedTodo = todos.splice(index - 1, 1)[0];
+      saveTodos(todos);
+      console.log(`${removedTodo} removed from you todo list`);
+    } else {
+      console.log('Invalid todo number');
+    }
+    rl.close();
+    main();
+  });
+};
+
 const main = () => {
   rl.question('What would you like to do? (list/add/remove/quit): ', answer => {
     switch (answer) {
       case 'add':
         addTodo();
-        break
+        break;
       case 'list':
         printTodos();
         rl.close();
+        break;
+      case 'remove':
+        removeTodo();
+        break;
+      case 'quit':
+        rl.close();
+        break;
       default:
+        console.log('Invalid option. Please try again.');
         main();
     }
   });
